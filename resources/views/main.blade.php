@@ -20,7 +20,7 @@
        {{-- <div class="container">
             @yield('content')
         </div>--}}
-        <example-component></example-component>
+        <csv></csv>
     </content>
 
     <footer></footer>
