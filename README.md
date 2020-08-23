@@ -13,13 +13,16 @@ php artisan migrate
 
 php artisan run serve
 
-##to run test
+
+
+## To run test
 
 php artisan test
 
 
 
-##csv test is on root 
+
+## Csv test is on root 
 
 testupload.csv
 
