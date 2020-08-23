@@ -27,6 +27,7 @@
         "-": "0.0.1",
         "@fortawesome/fontawesome-free": "^5.14.0",
         "bulma": "^0.9.0",
-        "save-dev": "0.0.1-security"
+        "save-dev": "0.0.1-security",
+        "vue-axios": "^2.1.5"
     }
 }

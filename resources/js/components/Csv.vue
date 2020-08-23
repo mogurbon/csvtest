@@ -1,58 +1,77 @@
 <template>
-    <div class="columns">
-        <div class="column"></div>
-        <div class="column">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Upload csv Test</div>
 
+                    <div class="card-body">
+                        <div v-if="success != ''" class="alert alert-success" role="alert">
+                            {{success}}
+                        </div>
+                        <div v-if="output != ''" class="alert alert-danger" role="alert">
+                            {{output}}
+                        </div>
+                        <form @submit="formSubmit" enctype="multipart/form-data">
 
-            <input type="file" id="file" ref="file" v-on:change="UploadFile()" accept=".XLSX, .CSV" class="form-control">
+                            <strong>File:</strong>
+                            <input type="file" class="form-control" v-on:change="onFileChange">
 
-            <button v-on:click="EventSubir()" class="btn btn-primary">Subir</button>
-        </div>
-
-        <div class="column">
-
-
+                            <button class="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-
-        data(){
+        mounted() {
+            console.log('Component mounted.')
+        },
+        data() {
             return {
-                events: [],
-
-            }
-
-
+                name: '',
+                file: '',
+                success: '',
+                output:''
+            };
         },
-        mounted () {
+        methods: {
+            onFileChange(e){
+                console.log(e.target.files[0]);
+                this.file = e.target.files[0];
+            },
+            formSubmit(e) {
+                e.preventDefault();
+                let currentObj = this;
 
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
 
-        },
-        methods:{
-            UploadFile(){
                 let formData = new FormData();
                 formData.append('file', this.file);
-                axios
-                    .post( '/import-excel-personas',
-                        formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        }
-                    ).then(function(){
-                    console.log('SUCCESS!!');
-                })
-                    .catch(function(){
-                        console.log('FAILURE!!');
-                    });
-            },
-            handleFileUpload(){
-                this.file = this.$refs.file.files[0];
-            }
 
+                axios.post('/import-excel', formData, config)
+                    .then(function (response) {
+
+                        if (response.data.success){
+                        currentObj.success = response.data.success;
+                            currentObj.error =''
+                        }else{
+
+                            currentObj.output = response.data.error;
+                            currentObj.success =''
+                        }
+                    })
+                    .catch(function (error) {
+                        currentObj.output = error;
+                        console.log(error)
+                    });
+            }
         }
     }
 </script>

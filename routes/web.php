@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Route::post('/import-excel', 'CsvController@import');
+
 Route::get('/', 'CsvController@index');
 
 Auth::routes();

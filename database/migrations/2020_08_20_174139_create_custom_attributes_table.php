@@ -16,8 +16,8 @@ class CreateCustomAttributesTable extends Migration
         Schema::create('custom_attributes', function (Blueprint $table) {
             $table->id();
             $table->integer('contact_id');
-            $table->string('key',255);
-            $table->string('value',255);
+            $table->string('key',255)->nullable()->default(null);
+            $table->string('value',255)->nullable()->default(null);
             $table->timestamps();
         });
     }
